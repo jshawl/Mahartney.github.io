@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
+        <title>Flashcards</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,9 +19,39 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p id="greeting">Hello world! This is HTML5 Boilerplate.</p>
-
-
+        <header>
+          <h1>Flashcards by DG</h1>
+          <h2></h2>
+        </header>
+        <body>
+          <div class="nav clearfix">
+            <button class="navbutton selected" id="add" type="button">Add</button>
+            <button class="navbutton" id="deal" type="button">Shuffle and Deal</button>
+          </div>
+          <main class = "clearfix">
+            <form class= "add clearfix">
+              Add Question:
+              <input class= "question" type="text"></input>
+              Add Answer:
+              <input class= "answer" type="text"></input>
+              <input class= "addButton" type= "submit" value="Add card to deck"></input>
+            </form>
+              <form class= "deal hidden">
+                <p class= "clearfix"></p>
+                <input class="" id= "nextCard" type="button" value="Next Card " + &#9658></input>
+              <h3 id="h3solution"> View Solution?</h3>
+                <div class="solution hidden">
+                  <a class="solutionadd">
+                  </a>
+                </div>
+              <h3 id="h3suggestion"> View Suggestions?</h3>
+                <div class="suggestions hidden">
+                </div>
+            </form>
+          </main>
+        </body>
+        <footer>
+        </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/modernizr-2.8.3.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
