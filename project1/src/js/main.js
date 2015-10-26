@@ -25,7 +25,7 @@ var addQuestion = function(evt){
 var shuffleAndDeal = function(evt){
   evt.preventDefault();
   if (Object.keys(cardDeck).length<4){
-    $("p").html("You must submit more than 4 cards before dealing the deck.")
+    $(".deal>p").html("You must submit more than 4 cards before dealing the deck.")
   } else {
     showCard()
   }

@@ -20,7 +20,7 @@
 
         <!-- Add your site or application content here -->
         <header>
-          <h1>Flashcards by DG</h1>
+          <h1>Build your own Flashcards</h1>
           <h2></h2>
         </header>
         <body>
@@ -28,16 +28,18 @@
             <button class="navbutton selected" id="add" type="button">Add</button>
             <button class="navbutton" id="deal" type="button">Shuffle and Deal</button>
           </div>
-          <main class = "clearfix">
-            <form class= "add clearfix">
-              Add Question:
+          <main class = "">
+            <form class= "add">
+              <div id="labels">
+                <p>Add Question:</p>
+                <p>Add Answer:</p>
+              </div>
               <input class= "question" type="text"></input>
-              Add Answer:
               <input class= "answer" type="text"></input>
-              <input class= "addButton" type= "submit" value="Add card to deck"></input>
+              <input class= "addButton hidden" type= "submit" value="Add card to deck"></input>
             </form>
               <form class= "deal hidden">
-                <p class= "clearfix"></p>
+                <p class= "deal clearfix"></p>
                 <input class="" id= "nextCard" type="button" value="Next Card " + &#9658></input>
               <h3 id="h3solution"> View Solution?</h3>
                 <div class="solution hidden">
