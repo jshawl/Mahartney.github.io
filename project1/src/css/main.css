@@ -134,12 +134,19 @@ header h2{
 }
 
 .navbutton{
-  width: 40%;
-  margin-left: 5%;
-  margin-right:5%;
-  float: left;
+  width: 160px;
   background-color: #A68572;
   border-radius: 15px;
+}
+
+#add{
+  float: left;
+  margin-left: calc(25% - 80px)
+  }
+
+#deal{
+  float: right;
+  margin-right: calc(25% - 80px)
 }
 
 .add{
@@ -169,7 +176,8 @@ header h2{
 }
 
 .deal p{
-  height: 200px;
+  min-height: 200px;
+  max-height: auto;
   width: 48%;
   margin:1%;
   style: block;
@@ -180,8 +188,7 @@ header h2{
 }
 
 h3{
-  width: 48%;
-  margin: 1%;
+  width: 50%;
   border: solid black 1px;
   style: inline-block;
   float: left;
@@ -204,23 +211,41 @@ h3{
   position: relative;
 }
 
+#delete{
+  margin-left: calc(50% - 55px);
+  width: 110px;
+  height: 20px;
+  position: absolute;
+}
+
 #left_arrow{
   width: 70px;
-  margin: 0px;
+  margin: auto;
   height: 20px;
   float: left;
+  position: absolute;
 }
 
 #right_arrow{
   width: 70px;
-  margin: 0px;
+  margin: auto;
   height: 20px;
   float: right;
+  position: relative;
 }
 
 ul{
+  width: 50%;
+  float: right;
   list-style: none;
+  padding: 0px;
 }
+
+li{
+  border: solid black 1px;
+  margin: 1px;
+}
+
 
 
 

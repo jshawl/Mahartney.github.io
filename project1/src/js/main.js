@@ -1,9 +1,9 @@
-var cardDeck = {
-  "Question One" :"Answer One",
-  "Question Two" :"Answer Two",
-  "Question Three" :"Answer Three",
-  "Question Four" : "Answer Four",
-};
+var cardDeck = [
+  {"Question One" :"Answer One"},
+  {"Question Two" :"Answer Two"},
+  {"Question Three" :"Answer Three"},
+  {"Question Four" : "Answer Four"},
+];
 var cardCount = Object.keys(cardDeck).length
 var cardSolution = "";
 var cardQuestion = "";
@@ -39,16 +39,18 @@ var shuffleAndDeal = function(evt){
 }
 //start or flip through card deck
 var showCard = function(){
-  $(".solution").addClass("hidden");
-  $(".suggestions").addClass("hidden");
   randomSelect();
   addSuggestions();
 }
 //select a random key/pair
 var randomSelect = function(){
+  $(".solution").addClass("hidden");
+  $(".suggestions").addClass("hidden");
   rand = Math.floor(Math.random()*Object.keys(cardDeck).length);
   cardQuestion = Object.keys(cardDeck)[rand];
   cardSolution = cardDeck[cardQuestion];
+  currentCard = rand+1
+  $("h2").html("You are on card " +currentCard +" of " + cardCount);
   $("p").html(cardQuestion);
   $(".solutionadd").html(cardSolution);
   var tempDeck = jQuery.extend(true, {}, cardDeck)
@@ -76,7 +78,12 @@ var showAdd = function(evt){
   $(".add").removeClass("hidden");
   $("#add").addClass("selected")
   $(".deal").addClass("hidden");
-  $("#deal").removeClass("selected")
+  $("#deal").removeClass("selected");
+  $('#delete').html("Delete Card");
+  var question = $(".add > .question");
+  var answer = $(".add > .answer");
+  question.val(Object.keys(cardDeck)[currentCard-1]);
+  answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
 }
 
 //nav button to start Deal mode
@@ -85,7 +92,10 @@ var showDeal = function(evt){
   $(".deal").removeClass("hidden");
   $(".add").addClass("hidden");
   $("#deal").addClass("selected");
-  $("#add").removeClass("selected")
+  $("#add").removeClass("selected");
+  $("#delete").html("Get Random Card");
+  cardCount = Object.keys(cardDeck).length;
+  $("h2").html("You are on card " +currentCard +" of " + cardCount);
 }
 
 //Fisher-Yates (aka Knuth) Shuffle.
@@ -122,28 +132,88 @@ var showSuggestions = function(){
 
 var cycleLeft = function(evt){
   evt.preventDefault();
-  var question = $(".add > .question");
-  var answer = $(".add > .answer");
   if (!$("#deal").hasClass("selected")){
-    currentCard --;
-    question.val(Object.keys(cardDeck)[currentCard-1]);
-    answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
-    $("h2").html("You are on card " +currentCard +" of " + cardCount);
+    var question = $(".add > .question");
+    var answer = $(".add > .answer");
+    if (currentCard <= 0) {
+      currentCard = 0;
+    } else {
+      currentCard --;
+      question.val(Object.keys(cardDeck)[currentCard-1]);
+      answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
+      $("h2").html("You are on card " +currentCard +" of " + cardCount);
+    }
+  } else {
+    if (currentCard > 1) {
+      $(".solution").addClass("hidden");
+      $(".suggestions").addClass("hidden");
+      currentCard --;
+      cardQuestion = Object.keys(cardDeck)[currentCard-1];
+      cardSolution = cardDeck[cardQuestion];
+      $("h2").html("You are on card " + currentCard +" of " + cardCount);
+      $("p").html(cardQuestion);
+      $(".solutionadd").html(cardSolution);
+      var tempDeck = jQuery.extend(true, {}, cardDeck)
+      delete tempDeck[cardQuestion];
+      for (var i = 0; i <3; i++) {
+        cardSuggestions.push(tempDeck[Object.keys(tempDeck)[i]]);
+      };
+      cardSuggestions.push(cardSolution);
+      shuffle(cardSuggestions);
+    }
   }
 }
 
 var cycleRight = function(evt){
   evt.preventDefault();
-  var question = $(".add > .question");
-  var answer = $(".add > .answer");
   if (!$("#deal").hasClass("selected")){
-    question.val(Object.keys(cardDeck)[currentCard]);
-    answer.val(cardDeck[Object.keys(cardDeck)[currentCard]]);
-    currentCard ++;
+    var question = $(".add > .question");
+    var answer = $(".add > .answer");
+    if (currentCard >= Object.keys(cardDeck).length) {
+      currentCard = Object.keys(cardDeck).length;
+    } else {
+      question.val(Object.keys(cardDeck)[currentCard]);
+      answer.val(cardDeck[Object.keys(cardDeck)[currentCard]]);
+      currentCard ++;
+    }
     $("h2").html("You are on card " +currentCard +" of " + cardCount);
+  } else {
+    if (currentCard< cardCount) {
+      $(".solution").addClass("hidden");
+      $(".suggestions").addClass("hidden");
+      cardQuestion = Object.keys(cardDeck)[currentCard];
+      cardSolution = cardDeck[cardQuestion];
+      currentCard ++;
+      $("h2").html("You are on card " + currentCard +" of " + cardCount);
+      $("p").html(cardQuestion);
+      $(".solutionadd").html(cardSolution);
+      var tempDeck = jQuery.extend(true, {}, cardDeck)
+      delete tempDeck[cardQuestion];
+      for (var i = 0; i <3; i++) {
+        cardSuggestions.push(tempDeck[Object.keys(tempDeck)[i]]);
+      };
+      cardSuggestions.push(cardSolution);
+      shuffle(cardSuggestions);
+    }
   }
 }
 
+var deleteCard = function(evt){
+  evt.preventDefault();
+  if (!$("#deal").hasClass("selected")){
+    var question = $(".add > .question");
+    var answer = $(".add > .answer");
+    delete cardDeck[Object.keys(cardDeck)[currentCard]];
+    currentCard --;
+    cardCount = Object.keys(cardDeck).length
+    $("h2").html("You are on card " +currentCard +" of " + cardCount);
+    question.val(Object.keys(cardDeck)[currentCard-1]);
+    answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
+  }
+  randomSelect();
+}
+
+$("#delete").on('click',deleteCard)
 $("#left_arrow").on('click',cycleLeft)
 $("#right_arrow").on('click',cycleRight)
 $("#nextCard").on('click',showCard)
