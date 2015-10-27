@@ -22,33 +22,33 @@
         <header>
           <h1>Build your own Flashcards</h1>
           <h2></h2>
+          <div class="nav clearfix">
+            <button class="navbutton selected" id="add" type="button">Add/Edit/Delete</button>
+            <button class="navbutton" id="deal" type="button">Shuffle and Deal</button>
+          </div>
         </header>
         <body>
-          <div class="nav clearfix">
-            <button class="navbutton selected" id="add" type="button">Add</button>
-            <button class="navbutton" id="deal" type="button">Shuffle and Deal</button>
+          <div class="navbar clearfix">
+            <button class= "arrow" id="left_arrow" type="button">&larr;</button>
+            <button class= "arrow" id="right_arrow" type="button">&rarr;</button>
           </div>
           <main class = "">
             <form class= "add">
-              <div id="labels">
-                <p>Add Question:</p>
-                <p>Add Answer:</p>
-              </div>
-              <input class= "question" type="text"></input>
-              <input class= "answer" type="text"></input>
+              <input class= "question" type="text" placeholder="Add Question Here:"></input>
+              <input class= "answer" type="text" placeholder="Add Answer Here:"></input>
               <input class= "addButton hidden" type= "submit" value="Add card to deck"></input>
             </form>
-              <form class= "deal hidden">
-                <p class= "deal clearfix"></p>
-                <input class="" id= "nextCard" type="button" value="Next Card " + &#9658></input>
+            <form class= "deal hidden">
+              <p class= "deal clearfix" placeholder"Hey"></p>
+              <input class="hidden" id= "nextCard" type="button" value="Next Card " + &#9658></input>
               <h3 id="h3solution"> View Solution?</h3>
-                <div class="solution hidden">
-                  <a class="solutionadd">
-                  </a>
-                </div>
+              <div class="solution hidden">
+                <a class="solutionadd">
+                </a>
+              </div>
               <h3 id="h3suggestion"> View Suggestions?</h3>
-                <div class="suggestions hidden">
-                </div>
+              <div class="suggestions hidden">
+              </div>
             </form>
           </main>
         </body>

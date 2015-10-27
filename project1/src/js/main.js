@@ -1,8 +1,14 @@
-var cardDeck = [];
+var cardDeck = {
+  "Question One" :"Answer One",
+  "Question Two" :"Answer Two",
+  "Question Three" :"Answer Three",
+  "Question Four" : "Answer Four",
+};
 var cardCount = Object.keys(cardDeck).length
 var cardSolution = "";
 var cardQuestion = "";
-var cardSuggestions = []
+var cardSuggestions = [];
+var currentCard = 0;
 
 //Create Flashcard out of two inputs
 var addQuestion = function(evt){
@@ -14,9 +20,10 @@ var addQuestion = function(evt){
   } else {
     cardDeck[question.val()] = answer.val();
     var cardCount = Object.keys(cardDeck).length;
-    $("h2").html("Cards in deck: " + cardCount);
+    $("h2").html("You are on card " +currentCard +" of " + cardCount);
     question.val("");
     answer.val("");
+    currentCard ++;
     $(".question").focus();
   }
 }
@@ -113,10 +120,36 @@ var showSuggestions = function(){
   }
 }
 
+var cycleLeft = function(evt){
+  evt.preventDefault();
+  var question = $(".add > .question");
+  var answer = $(".add > .answer");
+  if (!$("#deal").hasClass("selected")){
+    currentCard --;
+    question.val(Object.keys(cardDeck)[currentCard-1]);
+    answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
+    $("h2").html("You are on card " +currentCard +" of " + cardCount);
+  }
+}
+
+var cycleRight = function(evt){
+  evt.preventDefault();
+  var question = $(".add > .question");
+  var answer = $(".add > .answer");
+  if (!$("#deal").hasClass("selected")){
+    question.val(Object.keys(cardDeck)[currentCard]);
+    answer.val(cardDeck[Object.keys(cardDeck)[currentCard]]);
+    currentCard ++;
+    $("h2").html("You are on card " +currentCard +" of " + cardCount);
+  }
+}
+
+$("#left_arrow").on('click',cycleLeft)
+$("#right_arrow").on('click',cycleRight)
 $("#nextCard").on('click',showCard)
 $("#h3solution").on('click',showSolution);
 $("#h3suggestion").on('click',showSuggestions);
-$("h2").html("Cards in deck: " + cardCount);
+$("h2").html("You are on card " +currentCard +" of " + cardCount);
 $("#add").on('click',showAdd);
 $("#deal").on('click',showDeal);
 $(".nav>#deal").on('click',shuffleAndDeal);
