@@ -9,7 +9,6 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
@@ -20,12 +19,23 @@
 
         <!-- Add your site or application content here -->
         <header>
+          <div class="saveload">
+            <form>
+                <input id="savename" type="text" name="name">
+                <input id="savebutton" type="button" name="name" value="Save Deck">
+                <input id="loadbutton" type="button" name="name" value="Load Deck">
+                <ul class="dropdown hidden" id="loadname" value="No Saved Decks">
+                </ul>
+            </form>
+          </div>
+          <div class="header">
           <h1>Build your own Flashcards</h1>
           <h2></h2>
+          </div>
         </header>
         <body>
           <div class="nav clearfix">
-            <button class="navbutton selected" id="add" type="button">Add/Edit/Delete</button>
+            <button class="navbutton selected" id="add" type="button">Add/Delete</button>
             <button class="navbutton" id="deal" type="button">Shuffle and Deal</button>
           </div>
           <div class="navbar clearfix">
@@ -43,7 +53,7 @@
             </form>
             <form class= "deal hidden">
               <input class= "deal clearfix" id="hquestion" readonly></input>
-<!--          <input class="hidden" id= "nextCard" type="button" value="Next Card " + &#9658></input> -->
+              <input class="hidden" id= "nextCard" type="button" value="Next Card " + &#9658></input>
               <input class= "hidden" id="hsolution" readonly></input>
               <h3 id="h3suggestion"> View Suggestions?</h3>
               <div class="suggestions hidden">

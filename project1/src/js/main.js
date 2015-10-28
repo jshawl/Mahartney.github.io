@@ -1,3 +1,5 @@
+var decksMaster=[{EmptyDeck:{}}];
+var loadNames=[];
 var cardDeck = {
   "Question One" :"Answer One",
   "Question Two" :"Answer Two",
@@ -9,6 +11,65 @@ var cardSolution = "";
 var cardQuestion = "";
 var cardSuggestions = [];
 var currentCard = 0;
+var loadDeckX
+var NewDeck = {}
+
+var saveDeck = function(){
+  var saveName = $("#savename").val();
+  console.log(saveName)
+  var question = $(".add > .question");
+  var answer = $(".add > .answer");
+  var dropDown= $(".dropdown");
+  var tempDeck = jQuery.extend(true, {}, cardDeck);
+  var deckToSave = {};
+  loadNames.unshift(saveName);
+  deckToSave[saveName] = tempDeck;
+  if ($.grep(decksMaster, function(e){ return e[saveName]; }).length>0) {
+    if (confirm("Do you want to save over " +saveName)) {
+
+    }
+    console.log($.grep(decksMaster, function(e){ return e[saveName]}) )
+  } else {
+    decksMaster.unshift(deckToSave);
+    //cardDeck=[]
+    //question.val("");
+    //answer.val("");
+    //var cardCount = Object.keys(cardDeck).length;
+    //$("h2").html("You are on card " + currentCard +" of " + cardCount);
+    //currentCard = 0;
+    popLoadMenu()
+  }
+}
+
+var popLoadMenu = function(){
+  for( i=0;i<loadNames.length;i++){
+    $("#loadname").append('<li class="headerli">'+loadNames[i]+ '</li>')
+  }
+  if (!loadNames.indexOf("EmptyDeck")>=0) {
+    $("#loadname").append('<li class="headerli">EmptyDeck</li>')
+  }
+  $(".headerli").on('click',loadDeck)
+}
+
+var loadDeck = function(evt){
+  evt.preventDefault;
+  self = this
+  loadDeckX = $(self).html()
+  $("#savename").val(loadDeckX)
+  console.log(loadDeckX)
+  var testFunction = function(e){
+    console.log("inside function" + loadDeckX)
+    return e[loadDeckX];
+  };
+  cardDeckToLoad = $.grep(decksMaster, testFunction);
+  cardDeck = cardDeckToLoad[Object.keys(cardDeckToLoad)][loadDeckX]
+  $("#loadbutton").removeClass("hidden");
+  $("#loadname").addClass("hidden");
+  var cardCount = Object.keys(cardDeck).length;
+  currentCard = 0;
+  $("h2").html("You are on card " + currentCard +" of " + cardCount);
+  $("#loadbutton").removeClass("hidden")
+}
 
 //Create Flashcard out of two inputs
 var addQuestion = function(evt){
@@ -24,6 +85,8 @@ var addQuestion = function(evt){
     question.val("");
     answer.val("");
     $(".question").focus();
+    addReadOnlyA()
+    addReadOnlyQ()
   }
 }
 //Change focus and start dealing
@@ -83,6 +146,8 @@ var showAdd = function(evt){
   var answer = $(".add > .answer");
   question.val(Object.keys(cardDeck)[currentCard-1]);
   answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
+  addReadOnlyA()
+  addReadOnlyQ()
 }
 
 //nav button to start Deal mode
@@ -141,11 +206,15 @@ var cycleLeft = function(evt){
     var answer = $(".add > .answer");
     if (currentCard <= 0) {
       currentCard = 0;
+      addReadOnlyA()
+      addReadOnlyQ()
     } else {
       currentCard --;
       question.val(Object.keys(cardDeck)[currentCard-1]);
       answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
       $("h2").html("You are on card " +currentCard +" of " + cardCount);
+      addReadOnlyA()
+      addReadOnlyQ()
     }
   } else {
     if (currentCard > 1) {
@@ -181,6 +250,8 @@ var cycleDown = function(evt) {
     answer.val("");
     currentCard = 0;
     $("h2").html("You are on card " + currentCard +" of " + cardCount);
+    addReadOnlyA()
+    addReadOnlyQ()
   } else {
     showSolution();
   }
@@ -203,6 +274,8 @@ var cycleRight = function(evt) {
       currentCard ++;
     }
     $("h2").html("You are on card " + currentCard +" of " + cardCount);
+    addReadOnlyA()
+    addReadOnlyQ()
   } else {
     if (currentCard< cardCount) {
       $("#hsolution").addClass("hidden");
@@ -237,6 +310,8 @@ var cycleUp = function(evt) {
     answer.val(cardDeck[Object.keys(cardDeck)[cardCount-1]]);
     currentCard = cardCount;
     $("h2").html("You are on card " + currentCard +" of " + cardCount);
+    addReadOnlyA()
+    addReadOnlyQ()
   } else {
     showSuggestions();
   }
@@ -254,14 +329,40 @@ var deleteCard = function(evt){
     question.val(Object.keys(cardDeck)[currentCard-1]);
     answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
     $("h2").html("You are on card " + currentCard + " of " + cardCount);
+    addReadOnlyA()
+    addReadOnlyQ()
   } else {
     randomSelect();
   }
 }
 
+var addReadOnlyQ = function(){
+  if (currentCard>0) {
+    $(".question").attr('readonly', true);
+  } else {
+    $(".question").attr('readonly', false);
+  }
+}
+
+var addReadOnlyA = function(){
+  if (currentCard>0) {
+    $(".answer").attr('readonly', true);
+  } else {
+    $(".answer").attr('readonly', false);
+  }
+}
+
+var showLoads = function(){
+  $("#loadname").removeClass("hidden")
+}
+
+$("#loadbutton").on('click',showLoads)
+$("#savebutton").on('click',saveDeck)
 $("#delete").on('click',deleteCard)
 $("#left_arrow").on('click',cycleLeft)
 $("#right_arrow").on('click',cycleRight)
+$("#flip_card").on('click',cycleDown)
+$("#drop_suggestions").on('click',cycleUp)
 $("#nextCard").on('click',showCard)
 $("#h3suggestion").on('click',showSuggestions);
 $("h2").html("You are on card " +currentCard +" of " + cardCount);
@@ -269,6 +370,8 @@ $("#add").on('click',showAdd);
 $("#deal").on('click',showDeal);
 $(".nav>#deal").on('click',shuffleAndDeal);
 $(".addButton").on("click",addQuestion);
+$(document).change(addReadOnlyQ);
+$(document).change(addReadOnlyA);
 
 //From stackoverflow
 $(document).keydown(function(e) {

@@ -103,7 +103,7 @@ main{
   position: relative;
 }
 
-header{
+.header{
   margin:0 auto;
   width: 50%;
   text-align: center;
@@ -111,6 +111,42 @@ header{
   border-radius: 25px;
   text-shadow: 2px 2px #7A9A95;
   position: relative;
+}
+
+.saveload{
+  width: 300px;
+  height: auto;
+
+}
+
+#savename{
+  width: 200px;
+}
+
+#loadname{
+  width: 200px;
+  border: solid black 1px;
+  float: left;
+  min-height: auto;
+  max-height: 300px;
+  border-radius: 0px;
+  background-color: white;
+  overflow-y: auto;
+}
+
+#savebutton{
+  width: 75px;
+}
+
+#loadbutton{
+  width: 75px;
+}
+
+.headerli{
+  border: solid black 1px;
+  height: auto;
+  border: none;
+  color: black;
 }
 
 header h1{
@@ -163,6 +199,7 @@ header h2{
   border: solid blue 1px;
   float: left;
   border-radius: 50px;
+  font-size: 20px;
 }
 
 .add>.answer{
@@ -173,6 +210,7 @@ header h2{
   border: solid blue 1px;
   float: left;
   border-radius: 50px;
+  font-size: 20px;
 }
 
 .deal input{
@@ -186,13 +224,17 @@ header h2{
   float: left;
   background-color: white;
   vertical-align: middle;
+  font-size: 20px;
 }
 
 h3{
   width: 50%;
-  border: solid black 1px;
+  border: solid blue 1px;
   style: inline-block;
   float: left;
+  border-radius: 50px;
+  background-color: white;
+  padding: 5px;
 }
 
 #nextCard{
@@ -250,16 +292,24 @@ h3{
   position: relative;
 }
 
-ul{
+body ul{
   width: 50%;
   float: right;
   list-style: none;
   padding: 0px;
+  margin: 0px;
 }
 
-li{
-  border: solid black 1px;
+body li{
+  min-height: 30px;
+  max-height: auto;
+  border-radius: 50px;
+  border: solid blue 1px;
   margin: 1px;
+  background-color: white;
+  vertical-align: middle;
+  font-size: 15px;
+  padding: 5px;
 }
 
 
