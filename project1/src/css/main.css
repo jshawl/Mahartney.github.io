@@ -12,9 +12,6 @@ html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
-    width: 75%;
-    margin-left:12.5%;
-    margin-right: 12.5%;
 }
 
 /*
@@ -95,6 +92,9 @@ textarea {
 }
 body{
   background-color: #C7D0D5;
+  width: 70%;
+  margin-left:15%;
+  margin-right: 15%;
 };
 
 a {
