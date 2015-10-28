@@ -111,6 +111,10 @@ var loadDeck = function(evt){
   $("#loadbutton").removeClass("hidden");
   $("#loadname").addClass("hidden");
   var cardCount = Object.keys(cardDeck).length;
+  var question = $(".add > .question");
+  var answer = $(".add > .answer");
+  question.val("");
+  answer.val("");    
   currentCard = 0;
   $("h2").html("You are on card " + currentCard +" of " + cardCount);
   $("#loadbutton").removeClass("hidden")
