@@ -175,7 +175,8 @@ header h2{
   border-radius: 50px;
 }
 
-.deal p{
+.deal input{
+  border-radius: 50px;
   min-height: 200px;
   max-height: auto;
   width: 48%;
@@ -215,6 +216,21 @@ h3{
   margin-left: calc(50% - 55px);
   width: 110px;
   height: 20px;
+  position: absolute;
+}
+
+#drop_suggestions{
+  width: 70px;
+  height: 20px;
+  margin-left: calc(75% - 35px);
+  position: absolute;
+
+}
+
+#flip_card{
+  width: 70px;
+  height: 20px;
+  margin-left: calc(25% - 35px);
   position: absolute;
 }
 

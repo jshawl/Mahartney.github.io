@@ -30,7 +30,9 @@
           </div>
           <div class="navbar clearfix">
             <button class= "arrow" id="left_arrow" type="button">&larr;</button>
+            <button class= "flipcard" id="flip_card" type="button">&darr;</button>
             <button class= "delete" id="delete" type="button">Delete Card</button>
+            <button class= "dropsuggestions" id="drop_suggestions" type="button">&uarr;</button>
             <button class= "arrow" id="right_arrow" type="button">&rarr;</button>
           </div>
           <main class = "">
@@ -40,13 +42,9 @@
               <input class= "addButton hidden" type= "submit" value="Add card to deck"></input>
             </form>
             <form class= "deal hidden">
-              <p class= "deal clearfix" placeholder"Hey"></p>
-              <input class="hidden" id= "nextCard" type="button" value="Next Card " + &#9658></input>
-              <h3 id="h3solution"> View Solution?</h3>
-              <div class="solution hidden">
-                <a class="solutionadd">
-                </a>
-              </div>
+              <input class= "deal clearfix" id="hquestion" readonly></input>
+<!--          <input class="hidden" id= "nextCard" type="button" value="Next Card " + &#9658></input> -->
+              <input class= "hidden" id="hsolution" readonly></input>
               <h3 id="h3suggestion"> View Suggestions?</h3>
               <div class="suggestions hidden">
               </div>
