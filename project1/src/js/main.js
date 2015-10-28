@@ -1,4 +1,43 @@
-var decksMaster=[{EmptyDeck:{}}];
+var decksMaster=[{EmptyDeck:{}},
+  {"Washington Redskins": {
+    "#88":"Pierre Garcon",
+    "#14":"Ryan Grant",
+    "#71":"Trent Williams",
+    "#76":"Morgan Moses",
+    "#86":"Jordan Reed",
+    "#11":"DeSean Jackson",
+    "#91":"Ryan Kerrigan",
+    "#52":"Keenan Robinson",
+    "#26":"Bashaud Breeland",
+    "#46":"Alfred Morris",
+    "#8":"Kirk Cousins",
+    "#12":"Andre Roberts",
+    "#23":"Deangelo Hall",
+    "#93":"Trent Murphy",
+  }},
+  {"Animals Genus": {
+    "Cheetah":"Acinynox jubatus",
+    "Impala":"Aepyceros mylampus",
+    "Moose":"Alces alces",
+    "Arctic Fox":"Alopex Lagopus",
+    "Red Howler Monkey":"Alouatta seniculus",
+    "Snow goose":"Answer caerulescens",
+    "Roan antelope": "Hippotragus equinus",
+    "Chimpanzee":"Pan troglodytes",
+    "Asian lion":"Panthera leo persica",
+    "Osprey":"Pandon haliaetus",
+    "Polar bear":"Ursus maritimus",
+    "Wombat":"Vombatus ursinus",
+    "Manatee":"Trichechus inunguis",
+    "Bateleur eagle":"Terathopius ecaudatus",
+    "Wild boar":"Sus scrofa",
+    "King vulture":"Sarcorhamphus papa",
+    "Tasmanian devil":"Sarcophilus harrisii",
+    "Harbor seal":"Phoca vitulina",
+    "Platypus":"Ornithorhynchus anatinus",
+    "Painted stork":"Mycteria leucocephala",
+  }},
+];
 var loadNames=[];
 var cardDeck = {
   "Question One" :"Answer One",
@@ -16,20 +55,25 @@ var NewDeck = {}
 
 var saveDeck = function(){
   var saveName = $("#savename").val();
+  if (saveName=="") {
+    alert("Please enter valid name")
+  } else {
   console.log(saveName)
   var question = $(".add > .question");
   var answer = $(".add > .answer");
   var dropDown= $(".dropdown");
-  var tempDeck = jQuery.extend(true, {}, cardDeck);
+  var tempDeck = cardDeck;
   var deckToSave = {};
-  loadNames.unshift(saveName);
   deckToSave[saveName] = tempDeck;
-  if ($.grep(decksMaster, function(e){ return e[saveName]; }).length>0) {
-    if (confirm("Do you want to save over " +saveName)) {
-
-    }
-    console.log($.grep(decksMaster, function(e){ return e[saveName]}) )
+  if ($.grep(decksMaster, function(e){ return e[saveName]}).length>0) {
+    //is not saving over
+    console.log(deckToSave)
+    decksMaster[decksMaster.indexOf($.grep(decksMaster, function(e){ return e[saveName] }))] = deckToSave;
+    console.log(decksMaster[decksMaster.indexOf($.grep(decksMaster, function(e){ return e[saveName] }))])
+    popLoadMenu()
   } else {
+    console.log("This Ran")
+    loadNames.unshift(saveName)
     decksMaster.unshift(deckToSave);
     //cardDeck=[]
     //question.val("");
@@ -39,15 +83,16 @@ var saveDeck = function(){
     //currentCard = 0;
     popLoadMenu()
   }
+  }
 }
 
 var popLoadMenu = function(){
-  for( i=0;i<loadNames.length;i++){
-    $("#loadname").append('<li class="headerli">'+loadNames[i]+ '</li>')
-  }
-  if (!loadNames.indexOf("EmptyDeck")>=0) {
-    $("#loadname").append('<li class="headerli">EmptyDeck</li>')
-  }
+  $("#loadname").html('<li class="headerli">EmptyDeck</li>')
+  $("#loadname").append('<li class="headerli">Washington Redskins</li>')
+  $("#loadname").append('<li class="headerli">Animals Genus</li>')
+  for( i=0;i<loadNames.length;i++) {
+      $("#loadname").append('<li class="headerli">'+loadNames[i]+ '</li>')
+    }
   $(".headerli").on('click',loadDeck)
 }
 
@@ -69,6 +114,7 @@ var loadDeck = function(evt){
   currentCard = 0;
   $("h2").html("You are on card " + currentCard +" of " + cardCount);
   $("#loadbutton").removeClass("hidden")
+  $("#savename").val("")
 }
 
 //Create Flashcard out of two inputs
@@ -205,7 +251,10 @@ var cycleLeft = function(evt){
     var question = $(".add > .question");
     var answer = $(".add > .answer");
     if (currentCard <= 0) {
-      currentCard = 0;
+      currentCard = cardCount;
+      $("h2").html("You are on card " + currentCard +" of " + cardCount);
+      question.val(Object.keys(cardDeck)[currentCard-1]);
+      answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
       addReadOnlyA()
       addReadOnlyQ()
     } else {
@@ -267,7 +316,10 @@ var cycleRight = function(evt) {
     var answer = $(".add > .answer");
     var cardCount = Object.keys(cardDeck).length;
     if (currentCard >= Object.keys(cardDeck).length) {
-      currentCard = Object.keys(cardDeck).length;
+      currentCard = 0;
+      question.val("");
+      answer.val("");
+      $("h2").html("You are on card " + currentCard +" of " + cardCount);
     } else {
       question.val(Object.keys(cardDeck)[currentCard]);
       answer.val(cardDeck[Object.keys(cardDeck)[currentCard]]);
@@ -320,17 +372,21 @@ var cycleUp = function(evt) {
 var deleteCard = function(evt){
   evt.preventDefault();
   if (!$("#deal").hasClass("selected")){
-    console.log("Delete Card Ran")
-    var question = $(".add > .question");
-    var answer = $(".add > .answer");
-    delete cardDeck[Object.keys(cardDeck)[currentCard-1]];
-    cardCount = Object.keys(cardDeck).length;
-    currentCard --;
-    question.val(Object.keys(cardDeck)[currentCard-1]);
-    answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
-    $("h2").html("You are on card " + currentCard + " of " + cardCount);
-    addReadOnlyA()
-    addReadOnlyQ()
+    if (currentCard==0) {
+
+    } else {
+      console.log("Delete Card Ran")
+      var question = $(".add > .question");
+      var answer = $(".add > .answer");
+      delete cardDeck[Object.keys(cardDeck)[currentCard-1]];
+      cardCount = Object.keys(cardDeck).length;
+      currentCard --;
+      question.val(Object.keys(cardDeck)[currentCard-1]);
+      answer.val(cardDeck[Object.keys(cardDeck)[currentCard-1]]);
+      $("h2").html("You are on card " + currentCard + " of " + cardCount);
+      addReadOnlyA()
+      addReadOnlyQ()
+    }
   } else {
     randomSelect();
   }
@@ -353,7 +409,12 @@ var addReadOnlyA = function(){
 }
 
 var showLoads = function(){
-  $("#loadname").removeClass("hidden")
+  if (decksMaster.length === 1) {
+    alert("You have no decks to load");
+  } else {
+    $("#loadbutton").addClass("hidden")
+    $("#loadname").removeClass("hidden")
+  }
 }
 
 $("#loadbutton").on('click',showLoads)
