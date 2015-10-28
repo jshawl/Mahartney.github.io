@@ -114,7 +114,7 @@ var loadDeck = function(evt){
   var question = $(".add > .question");
   var answer = $(".add > .answer");
   question.val("");
-  answer.val("");    
+  answer.val("");
   currentCard = 0;
   $("h2").html("You are on card " + currentCard +" of " + cardCount);
   $("#loadbutton").removeClass("hidden")
@@ -287,6 +287,7 @@ var cycleLeft = function(evt){
       };
       cardSuggestions.push(cardSolution);
       shuffle(cardSuggestions);
+      addSuggestions()
     }
   }
 }
@@ -350,6 +351,7 @@ var cycleRight = function(evt) {
       };
       cardSuggestions.push(cardSolution);
       shuffle(cardSuggestions);
+      addSuggestions()
     }
   }
 }
