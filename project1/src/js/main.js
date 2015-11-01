@@ -38,6 +38,7 @@ var decksMaster=[{EmptyDeck:{}},
     "Painted stork":"Mycteria leucocephala",
   }},
 ];
+// excellent starter decks!
 var loadNames=[];
 var cardDeck = {
   "Question One" :"Answer One",
@@ -46,6 +47,7 @@ var cardDeck = {
   "Question Four" : "Answer Four",
 };
 var cardCount = Object.keys(cardDeck).length
+// maybe an array of card objects is a better data structure here.
 var cardSolution = "";
 var cardQuestion = "";
 var cardSuggestions = [];
@@ -66,8 +68,9 @@ var saveDeck = function(){
   var deckToSave = {};
   deckToSave[saveName] = tempDeck;
   if ($.grep(decksMaster, function(e){ return e[saveName]}).length>0) {
+    // whoah didn't know about $.grep()
     //is not saving over
-    console.log(deckToSave)
+    console.log(deckToSave) // remove debug code before submitting in the future.
     decksMaster[decksMaster.indexOf($.grep(decksMaster, function(e){ return e[saveName] }))] = deckToSave;
     console.log(decksMaster[decksMaster.indexOf($.grep(decksMaster, function(e){ return e[saveName] }))])
     popLoadMenu()
@@ -76,6 +79,7 @@ var saveDeck = function(){
     loadNames.unshift(saveName)
     decksMaster.unshift(deckToSave);
     //cardDeck=[]
+    // remove commented out code
     //question.val("");
     //answer.val("");
     //var cardCount = Object.keys(cardDeck).length;
@@ -90,6 +94,7 @@ var popLoadMenu = function(){
   $("#loadname").html('<li class="headerli">EmptyDeck</li>')
   $("#loadname").append('<li class="headerli">Washington Redskins</li>')
   $("#loadname").append('<li class="headerli">Animals Genus</li>')
+  // can you generate these li's from your master deck above?
   for( i=0;i<loadNames.length;i++) {
       $("#loadname").append('<li class="headerli">'+loadNames[i]+ '</li>')
     }
@@ -102,7 +107,7 @@ var loadDeck = function(evt){
   loadDeckX = $(self).html()
   $("#savename").val(loadDeckX)
   console.log(loadDeckX)
-  var testFunction = function(e){
+  var testFunction = function(e){ // remove debug code
     console.log("inside function" + loadDeckX)
     return e[loadDeckX];
   };
@@ -158,14 +163,14 @@ var randomSelect = function(){
   console.log("Random Select Ran")
   $(".solution").addClass("hidden");
   $(".suggestions").addClass("hidden");
-  rand = Math.floor(Math.random()*Object.keys(cardDeck).length);
+  rand = Math.floor(Math.random()*Object.keys(cardDeck).length); // nice
   cardQuestion = Object.keys(cardDeck)[rand];
   cardSolution = cardDeck[cardQuestion];
   currentCard = rand+1
   $("h2").html("You are on card " +currentCard +" of " + cardCount);
   $("#hquestion").val(cardQuestion);
   $("#hsolution").val(cardSolution);
-  var tempDeck = jQuery.extend(true, {}, cardDeck)
+  var tempDeck = jQuery.extend(true, {}, cardDeck) // be consistent w/ $ vs jQuery
   delete tempDeck[cardQuestion];
   for (var i = 0; i <3; i++) {
     cardSuggestions.push(tempDeck[Object.keys(tempDeck)[i]]);
@@ -192,6 +197,7 @@ var showAdd = function(evt){
   $(".deal").addClass("hidden");
   $("#deal").removeClass("selected");
   $('#delete').html("Delete Card");
+  // try to be consistent with using ids or classes as selectors
   var question = $(".add > .question");
   var answer = $(".add > .answer");
   question.val(Object.keys(cardDeck)[currentCard-1]);
@@ -208,6 +214,8 @@ var showDeal = function(evt){
   $("#deal").addClass("selected");
   $("#add").removeClass("selected");
   $("#delete").html("Get Random Card");
+  // the above code looks familiar. Can you think of a way to combine
+  // this with the above function?
   cardCount = Object.keys(cardDeck).length;
   $("h2").html("You are on card " +currentCard +" of " + cardCount);
 }
@@ -375,6 +383,11 @@ var cycleUp = function(evt) {
   }
 }
 
+// your cycle functions seem to share a lot of functionality.
+// can you think of a way to let the cycle functions only change
+// the value of an integer, and then separately handle all the
+// show/hide functionality depending on the value of the integer?
+
 var deleteCard = function(evt){
   evt.preventDefault();
   if (!$("#deal").hasClass("selected")){
@@ -440,7 +453,7 @@ $(".addButton").on("click",addQuestion);
 $(document).change(addReadOnlyQ);
 $(document).change(addReadOnlyA);
 
-//From stackoverflow
+//From stackoverflow // please include link to question/answer
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left

@@ -95,10 +95,10 @@ body{
   width: 80%;
   margin-left:10%;
   margin-right: 10%;
-};
+}
 
 a {
-  style: inline-block;
+  display: inline-block;
 }
 
 main{
@@ -119,7 +119,6 @@ main{
 .saveload{
   width: 300px;
   height: auto;
-
 }
 
 #savename{
@@ -144,6 +143,7 @@ main{
 #loadbutton{
   width: 75px;
 }
+/* Prefer classes when possible - they are reusable. */
 
 .headerli{
   border: solid black 1px;
@@ -180,7 +180,7 @@ header h2{
 
 #add{
   float: left;
-  margin-left: calc(25% - 80px)
+  margin-left: calc(25% - 80px); /* NICE! */
   }
 
 #deal{
@@ -198,7 +198,7 @@ header h2{
   height: 200px;
   width: 48%;
   margin:1%;
-  style: block;
+  display: block;
   border: solid blue 1px;
   float: left;
   border-radius: 50px;
@@ -209,7 +209,7 @@ header h2{
   height:200px;
   width: 48%;
   margin: 1%;
-  style: block;
+  display: block;
   border: solid blue 1px;
   float: left;
   border-radius: 50px;
@@ -222,13 +222,16 @@ header h2{
   max-height: auto;
   width: 48%;
   margin:1%;
-  style: block;
+  display: block;
   border: solid blue 1px;
   float: left;
   background-color: white;
   vertical-align: middle;
   font-size: 20px;
 }
+/*  The 3 selectors above are very similar. Combine the common styles
+ *  by comma-separating your selectors. 
+ */
 
 h3{
   width: 50%;
@@ -284,7 +287,8 @@ h3{
   margin: auto;
   height: 20px;
   float: left;
-  position: absolute;
+  position: absolute; /* Does this need to be absolutely positioned? Floats might be
+		       a safer bet here. */
 }
 
 #right_arrow{
@@ -490,3 +494,4 @@ body li{
         page-break-after: avoid;
     }
 }
+/* what is all this? */
